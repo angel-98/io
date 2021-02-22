@@ -1,0 +1,29 @@
+<h2>Lista de dispositivos</h2>
+<!-- directivas  -->
+<!-- nombre de la duncion de comias -->
+<app-ag-detalle (dispCreado)="onDispCreado()"></app-ag-detalle>
+
+<table class="table table-hover table-inverse">
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Descripción</th>
+			<!-- <th>Estatus</th> -->
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let d of listadoDispositivos"[ngClass]="{'encendido':d.estatus==true}">
+			<!-- para prensentar el listado del arreglo Disp[]=[] -->
+			<td>{{d.nombre}}</td> 
+			<!-- reisor usa el moto de dos llaves -->
+			<td>{{d.descripcion}}</td>
+
+			<td>{{d.estado}}</td>
+			
+			<!-- para que se impriman todos las lista se hace uso de la directica *ngFor -->
+			<!-- la instruccion let sirve para tomar un dato D(variable) representa dispositivos despues de donde lo va a tomar OF y la variable que se definio listasDipositivos  -->
+			<!-- nueva directiva para que se muestre eb color verde  con ngClass permite asignar una clase al elemento que le ponga, se tiene que cumplir una validacion, una exprecion que tenga un true  false -->
+		</tr>
+	</tbody>
+</table>
