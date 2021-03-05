@@ -7,7 +7,10 @@ import { NuevoCComponent } from './nuevo-c/nuevo-c.component';
 import { AgDispComponent } from './dispositivos/ag-disp/ag-disp.component';
 import { AgDetalleComponent } from './dispositivos/ag-detalle/ag-detalle.component';
 import { FormsModule } from '@angular/forms';
+//-------------------
 import { DispServices } from './dispositivos/disp.service';
+import { WebSocketServices } from './dispositivos/websocket.service';
+
 //-------------------
 import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,7 +52,7 @@ import { AgIotComponent } from './dispositivos/ag-iot/ag-iot.component';
     MatPaginatorModule
 
   ],
-  providers: [DispServices],
+  providers: [DispServices, WebSocketServices],
   bootstrap: [AppComponent]
 })
 // <mat-slider min="1" max="100" step="1" value="1"></mat-slider>

@@ -1,6 +1,9 @@
 // modelo de creacion del modelo orienta objetos
 // clase de dispositivo
 export class Disp{
+	public _id:string;
+	public nivel:number;
+	public last_conn:Date;
 	// defenir variables
 
 	// defenir constructores puede haber mas de uno
@@ -13,6 +16,6 @@ export class Disp{
 		// public estado:string
 		) {
 		// code..
-		//this.estatus=false;
+		this.estatus=estatus||false;
 	}
 }
