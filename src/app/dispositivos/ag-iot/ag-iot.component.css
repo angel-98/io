@@ -5,3 +5,23 @@
 .cuh-cards > mat-card{
   width: 200px;
 }
+/*.encendido {
+	background-color: green;
+}*/
+.acti{
+	/*background-color: green;*/
+	color-rendering: green;
+	color: green;
+}
+.acti-off{
+	/*background-color: green;*/
+	color-rendering: red;
+	color: red;
+}
+/*#estatus{
+	color-rendering: red;
+	color: red;
+	text-align: right;
+	align-items: center;
+}
+*/

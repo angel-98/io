@@ -13,6 +13,7 @@ const app=express();
 
 //servidor Websocket
 const wss = new WebSocket.Server({port : 8000});
+// const temperatureDisplay = document.getElementById('temperature');
 
 mongoose.connect('mongodb://localhost:27017',
  {useNewUrlParser: true, useUnifiedTopology: true});
@@ -31,6 +32,7 @@ var optionsMqtt={
 //	username:" steve",
 //	password: "password",
 //	clean:true
+
 }
 var mqttClient = mqtt.connect("mqtt://192.168.1.72", optionsMqtt);
 
@@ -189,6 +191,17 @@ app.get("/api/disp/on/:id", (req, resp, next)=>{
 				};
 				if (mqttClient.connected==true) {
 					//utpti/c10/C1/ventilador
+					disp.estatus=true;
+					disp.nivel = 20;
+					disp.last_conn=Date.now();
+					disp.save(function(err, data){
+						if (err) {
+							console.error(err);
+						}
+						else{
+							console.log('evento registrado');
+						}//posiblemente borrar el conchete
+					});
 					mqttClient.publish(disp.descripcion, "on", options);
 					resp.status(200).json('Mensaje enviado');
 
@@ -217,7 +230,22 @@ app.get("/api/disp/off/:id",(req, resp, next)=>{
             };
           if (mqttClient.connected == true){
             //room1/kitchen/tv1
-
+            disp.estatus=false;
+					disp.nivel = 0;
+					disp.last_conn=Date.now();
+					disp.save(function(err, data){
+						if (err) {
+							console.error(err);
+						}
+						else{
+						console.log('evento registrado');
+						wss.clients.forEach(function each(client) {
+                          if (client.readyState === WebSocket.OPEN) {
+                            client.send(JSON.stringify(dato));
+                          }
+                        }); 
+						}//posiblemente borrar el conchete
+					});
             mqttClient.publish(disp.descripcion, "off" , options);
             resp.status(200).json('Mensaje enviado!');
             
@@ -248,6 +276,7 @@ mqttClient.on('message', function(topic, message, packet){
 			else{
 				if (message == 'encendido') {
 					disp.estatus=true;
+					disp.nivel = 20;
 					disp.last_conn=Date.now();
 					disp.save(function(err, data){
 						if (err) {
@@ -260,6 +289,7 @@ mqttClient.on('message', function(topic, message, packet){
 				}
 				if (message=='apagado') {
 					disp.estatus=false;
+					disp.nivel = 0;
 					disp.last_conn=Date.now();
 					disp.save(function(err, data){
 						if (err) {
@@ -300,6 +330,13 @@ wss.on('connection', ws => {
   ws.send(JSON.stringify('Servidor Websocket'));
 
 });
+
+
+
+// socket.on('temp', function (data) {
+//   console.log(data);
+//   temperature.innerHTML = `${data}°C`;
+// });
 
 
 

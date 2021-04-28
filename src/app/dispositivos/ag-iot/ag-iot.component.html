@@ -8,14 +8,20 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>{{d.nombre}}</mat-card-title>
-        <mat-card-subtitle>{{d.estatus}}</mat-card-subtitle>
+        <mat-card-subtitle id ="estatus">{{d.estatus}} <a href="" *ngIf="d.estatus == 1"><i class="material-icons acti"  [ngClass]="{'acti':d.estatus==true}">sensors</i></a>
+         <a href=""*ngIf="d.estatus == 0"><i class="material-icons acti" [ngClass]="{'acti-off':d.estatus==false}">sensors_off</i></a>
+            </mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image src="/assets/images/iot{{d.tipo}}.jpg" alt="Lampara">
       <mat-card-content>
         <p>
           {{d.descripcion}}
         </p>
+        <strong> La Temperatura es: </strong><p>{{d.nivel}}</p>
       </mat-card-content>
+      <div class="card">
+            <h1 id="temperature" class="display-1 p-4"></h1>
+          </div>
       <mat-card-actions>
        
           <button (click)= "sensorOn(d._id)" mat-button>Encender</button>
